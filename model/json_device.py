@@ -286,7 +286,7 @@ class JsonDevice(ConnectedDevice):
             process_success:bool = (process.returncode == 0)
 
             ack = E.Values.AckStat.SUCCESS if process_success else E.Values.AckStat.FAIL
-            process_output: bytes = process.stdout if process_success else process.stderr
+            process_output: bytes = process.stdout #if process_success else process.stderr
         
             ack_message = str(process_output, 'UTF-8')
             self.send_ack(msg,ack, ack_message)
