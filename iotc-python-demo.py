@@ -4,7 +4,7 @@
 '''
 import time
 import sys
-from model.json_device import JsonDevice
+from model.procedural_device import ProceduralDevice
 
 from signal import signal, SIGINT
 keep_running = True
@@ -12,13 +12,12 @@ def sigint_handler(signal_received, frame):
     global keep_running
     keep_running = False
 
-
 def main(argv):
     '''Main function'''
     signal(SIGINT, sigint_handler)
     
     CREDENTIALS_PATH = argv[1:][0]
-    device = JsonDevice(CREDENTIALS_PATH)
+    device = ProceduralDevice(CREDENTIALS_PATH)
     device.connect()
     while keep_running:
         if device.needs_exit and not device.in_ota:
