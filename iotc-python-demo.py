@@ -23,10 +23,13 @@ def main(argv):
         if device.needs_exit and not device.in_ota:
             print("OTA requested exit, exiting")
             break
+
+        device.send_from_pipe()
+
         
-        data_sent = device.send_device_states()
-        print(data_sent)
-        time.sleep(10)
+        # data_sent = device.send_device_states()
+        # print(data_sent)
+        # time.sleep(10)
 
 
 if __name__ == "__main__":
