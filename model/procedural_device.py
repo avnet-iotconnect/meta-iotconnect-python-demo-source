@@ -394,11 +394,8 @@ class ProceduralDevice():
         self.send_ack(msg,E.Values.AckStat.FAIL, f"Command {command[0]} does not exist")
 
     def send_from_pipe(self):
-        listener = IOTCPipe(DEFAULT_PIPE_PATH, 'r')    
-        from_pipe = listener.receive_data()
-        listener.close_connection()
+        from_pipe = IOTCPipe.read_object()
         if from_pipe is not None:
-            data = {}
-            data['example'] = from_pipe
-            data_sent = device.send_d2c(device.generate_d2c_data(data))
+            if isinstance(from_pipe, dict):
+                data_sent = self.send_d2c(self.generate_d2c_data(from_pipe))
 
