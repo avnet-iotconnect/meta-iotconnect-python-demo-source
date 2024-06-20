@@ -7,7 +7,7 @@ import struct
 from iotconnect import IoTConnectSDK
 from datetime import datetime
 from model.enums import Enums as E
-from model.iotc_pipe import IOTCPipe, DEFAULT_PIPE_PATH
+from model.iotc_pipe import *
 import json
 
 
@@ -106,9 +106,10 @@ class ProceduralDevice():
     in_ota:bool = False
     attribute_metadata: list = None
     send_only_templated_attributes:bool = False
+    iotc_ipc = None
 
     def __init__(self, conf_file):
-    
+        self.iotc_ipc = IOTC_IPC.Receiver()   
         # Get Json
         j: json = None
         with open(conf_file, "r", encoding="utf-8") as file:
@@ -394,8 +395,6 @@ class ProceduralDevice():
         self.send_ack(msg,E.Values.AckStat.FAIL, f"Command {command[0]} does not exist")
 
     def send_from_pipe(self):
-        from_pipe = IOTCPipe.read_object()
-        if from_pipe is not None:
-            if isinstance(from_pipe, dict):
-                data_sent = self.send_d2c(self.generate_d2c_data(from_pipe))
-
+        from_pipe = self.iotc_ipc.read_object()
+        data_sent = self.send_d2c(self.generate_d2c_data(from_pipe))
+        return data_sent
