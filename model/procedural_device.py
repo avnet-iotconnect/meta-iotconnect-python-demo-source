@@ -7,7 +7,7 @@ import struct
 from iotconnect import IoTConnectSDK
 from datetime import datetime
 from model.enums import Enums as E
-from model.iotc_pipe import *
+from model.iotc_ipc import *
 import json
 
 
