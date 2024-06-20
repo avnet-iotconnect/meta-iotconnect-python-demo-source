@@ -233,6 +233,9 @@ class ProceduralDevice():
             #env=self.environment,
             sdkOptions=self.sdk_options,
             initCallback=self.init_cb)
+
+        # set to 0 as the template requires
+        self.SdkClient._data_frequency = 0
         
         self.bind_callbacks()
         self.SdkClient.GetAttributes(self.get_attribute_metadata_from_cloud)
